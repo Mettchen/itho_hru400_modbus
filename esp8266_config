@@ -1,0 +1,423 @@
+# The modbus addresses in this document is from the modbus documentation from Itho
+# https://ithodaalderop.compano.com/Data/Environments/000001/Attachment/Bijlage/A04_Ventilatie/A04_02_Gebalanceerd/A04_02_01_HRU/A04_02_01_06_HRU_400/B01_06_MTE/01-03763-005%20%20HRU%20400-Handleiding.pdf
+# this config is made for usage with nodemcuv2 ESP8266. This board does not have 5V to drive the max485, so a seperate board or another 5 V source should be added to drive the MAX485.
+
+esphome:
+  name: ventilation
+  friendly_name: ventilation
+
+esp8266:
+  board: nodemcuv2
+
+# Enable logging
+logger:
+  level: DEBUG
+  baud_rate: 0
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  password: !secret ota_encryption_key
+
+wifi:
+  ssid: !secret wifi_name
+  password: !secret wifi_code
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Ventilation Fallback Hotspot"
+    password: !secret fallback_code
+
+captive_portal:
+
+modbus:
+  flow_control_pin: 5
+  id: modbus1
+  uart_id: mod_uart
+
+uart:
+  id: mod_uart
+  tx_pin: GPIO1
+  rx_pin: GPIO3
+  baud_rate: 19200
+  parity: EVEN
+  stop_bits: 1
+  data_bits: 8
+
+
+modbus_controller:
+  - id: itho_ventilation
+    address: 7 ## the Modbus device addr
+    modbus_id: modbus1
+    update_interval: 20s
+    setup_priority: -10
+    command_throttle: 200ms
+
+
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "highest % toevoer automode"
+    id: hru_toevoer_maxperc
+    register_type: holding
+    address: 3000 
+    value_type: U_WORD
+    unit_of_measurement: "%"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "highest % afvoer automode"
+    id: hru_afvoer_maxperc
+    register_type: holding
+    address: 3001 
+    value_type: U_WORD
+    unit_of_measurement: "%"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "highest % RV non-fan"
+    id: hru_RV_ext_maxperc
+    register_type: holding
+    address: 3010 
+    value_type: U_WORD
+    unit_of_measurement: "%"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "highest ppm CO2 non-fan"
+    id: hru_co2_maxperc
+    register_type: holding
+    address: 3011 
+    value_type: U_WORD
+    unit_of_measurement: "ppm"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "snelheid toevoerventilator"
+    id: hru_rpm_toevoerventilator
+    register_type: holding
+    address: 3020 
+    value_type: U_WORD
+    unit_of_measurement: "rpm"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "snelheid afvoerventilator"
+    id: hru_rpm_afvoerventilator
+    register_type: holding
+    address: 3021 
+    value_type: U_WORD
+    unit_of_measurement: "rpm"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "power toevoerventilator"
+    id: hru_pwr_toevoerventilator
+    register_type: holding
+    address: 3022 
+    value_type: U_WORD
+    unit_of_measurement: "W"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "power afvoerventilator"
+    id: hru_pwr_afvoerventilator
+    register_type: holding
+    address: 3023 
+    value_type: U_WORD
+    unit_of_measurement: "W" 
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h toevoer van buiten"
+    id: hru_m3h_toevoer_external
+    register_type: holding
+    address: 3030 
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "Massastroom van buitenaf"
+    id: hru_massastroom_buiten
+    register_type: holding
+    address: 3031 
+    value_type: U_WORD
+    unit_of_measurement: "kg/h"
+
+  - platform: modbus_controller # 0x91 type, signed 16bit/10
+    modbus_controller_id: itho_ventilation
+    name: "temp toevoer van buiten"
+    id: hru_temp_toevoer_external
+    register_type: holding
+    address: 3032 
+    value_type: S_WORD
+    filters:
+      - multiply: 0.10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "humidity toevoer van buiten"
+    id: hru_hum_toevoer_external
+    register_type: holding
+    address: 3033 
+    value_type: U_WORD
+    unit_of_measurement: "%"
+
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h toevoer gemengd"
+    id: hru_m3h_toevoer_gemengd
+    register_type: holding
+    address: 3050 
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "massastroom gemengd"
+    id: hru_massastroom_gemengd
+    register_type: holding
+    address: 3051
+    value_type: U_WORD
+    unit_of_measurement: "kg/h"
+
+  - platform: modbus_controller # 0x91 type, signed 16bit/10
+    modbus_controller_id: itho_ventilation
+    name: "temp toevoer gemengd"
+    id: hru_temp_toevoer_gemengd
+    register_type: holding
+    address: 3052 
+    value_type: S_WORD
+    filters:
+      - multiply: 0.10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "humidity toevoer gemengd"
+    id: hru_hum_toevoer_gemengd
+    register_type: holding
+    address: 3053 
+    value_type: U_WORD
+    unit_of_measurement: "%"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h toevoer binnen totaal"
+    id: hru_m3h_toevoer_binnen_total
+    register_type: holding
+    address: 3060 
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "massastroom naar gebouw"
+    id: hru_massastroom_gebouw
+    register_type: holding
+    address: 3061
+    value_type: U_WORD
+    unit_of_measurement: "kg/h"
+
+
+  - platform: modbus_controller # 0x91 type, signed 16bit/10
+    modbus_controller_id: itho_ventilation
+    name: "temp toevoer binnen"
+    id: hru_temp_toevoer_binnen
+    register_type: holding
+    address: 3062 
+    value_type: S_WORD
+    filters:
+      - multiply: 0.10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "humidity toevoer naar gebouw"
+    id: hru_hum_toevoer_binnen
+    register_type: holding
+    address: 3063 
+    value_type: U_WORD
+    unit_of_measurement: "%"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h afvoer totaal"
+    id: hru_m3h_afvoer_binnen
+    register_type: holding
+    address: 3070 
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "massastroom van gebouw"
+    id: hru_massastroom_van_gebouw
+    register_type: holding
+    address: 3071
+    value_type: U_WORD
+    unit_of_measurement: "kg/h"
+
+  - platform: modbus_controller # 0x91 type, signed 16bit/10
+    modbus_controller_id: itho_ventilation
+    name: "temp afvoer binnen"
+    id: hru_temp_afvoer_binnen
+    register_type: holding
+    address: 3072 
+    value_type: S_WORD
+    filters:
+      - multiply: 0.10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "humidity afvoer binnen"
+    id: hru_hum_afvoer_binnen
+    register_type: holding
+    address: 3073 
+    value_type: U_WORD
+    unit_of_measurement: "%"
+    filters:
+      - or:
+          - delta: 1
+          - heartbeat: 60s
+      - lambda: 
+          float rand1 = rand() % 1;        
+          return x + rand1;
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h afvoer buiten"
+    id: hru_m3h_afvoer_buiten
+    register_type: holding
+    address: 3080 
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "massastroom naar buiten"
+    id: hru_massastroom_naar_buiten
+    register_type: holding
+    address: 3081
+    value_type: U_WORD
+    unit_of_measurement: "kg/h"
+  
+  - platform: modbus_controller # 0x91 type, signed 16bit/10
+    modbus_controller_id: itho_ventilation
+    name: "temp afvoer buiten"
+    id: hru_temp_afvoer_buiten
+    register_type: holding
+    address: 3082 
+    value_type: S_WORD
+    filters:
+    - multiply: 0.10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "humidity afvoer buiten"
+    id: hru_hum_afvoer_buiten
+    register_type: holding
+    address: 3083 
+    value_type: U_WORD
+    unit_of_measurement: "%"
+
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h ask kookzone"
+    id: hru_m3h_ask_zone1
+    register_type: holding
+    address: 3200
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h ask slaapzone"
+    id: hru_m3h_ask_zone2
+    register_type: holding
+    address: 3201
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h ask natte zone" #now set to 78-260
+    id: hru_m3h_ask_zone3
+    register_type: holding
+    address: 3202 
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+
+number:
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h vraag kook zone"
+    address: 2210
+    value_type: U_WORD
+    min_value: 0
+    max_value: 213
+    step: 100
+    id: hru_zone2stroomvraag
+    register_type: holding
+    use_write_multiple: true
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h vraag natte zone"
+    address: 2214 
+    value_type: U_WORD
+    min_value: 0
+    max_value: 302
+    step: 100
+    id: hru_zone3stroomvraag
+    register_type: holding
+    use_write_multiple: true
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h vraag slaap zone"
+    address: 2216
+    value_type: U_WORD
+    min_value: 0
+    max_value: 213
+    step: 100
+    id: hru_zone4stroomvraag
+    register_type: holding
+    use_write_multiple: true
+
+
+switch:
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h vraag kook zone on/off"
+    address: 2211
+    id: hru_zone2stroomvraag_on
+    register_type: holding
+    use_write_multiple: true
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h vraag natte zone on/off"
+    address: 2215
+    id: hru_zone3stroomvraag_on
+    register_type: holding
+    use_write_multiple: true
+
+  - platform: modbus_controller
+    modbus_controller_id: itho_ventilation
+    name: "m3/h vraag slaap zone on/off"
+    address: 2217
+    id: hru_zone4stroomvraag_on
+    register_type: holding
+    use_write_multiple: true
+
