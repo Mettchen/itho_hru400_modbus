@@ -20,3 +20,4 @@ NB! VCC should with MAX485 be connected to 5V externally.
 
 # Solution 2 - ESP32
 Same configuration as above, but with the 5V pin for VCC if using MAX485.
+NB! For some reason this one does not like GND attached, but works fine without - maybe with a few reading errors?
