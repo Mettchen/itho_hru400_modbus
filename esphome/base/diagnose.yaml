@@ -1,1 +1,307 @@
-
+sensor:
+  - name: ${diag_200}
+    address: 200
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_201}
+    address: 201
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_202}
+    address: 202
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_203}
+    address: 203
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_204}
+    address: 204
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_205}
+    address: 205
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_206}
+    address: 206
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_207}
+    address: 207
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_208}
+    address: 208
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_209}
+    address: 209
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_210}
+    address: 210
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_211}
+    address: 211
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_212}
+    address: 212
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_213}
+    address: 213
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_214}
+    address: 214
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_215}
+    address: 215
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_216}
+    address: 216
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_217}
+    address: 217
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_218}
+    address: 218
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_219}
+    address: 219
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_220}
+    address: 220
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_221}
+    address: 221
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_222}
+    address: 222
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_223}
+    address: 223
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_224}
+    address: 224
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_225}
+    address: 225
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_226}
+    address: 226
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_227}
+    address: 227
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_228}
+    address: 228
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_229}
+    address: 229
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_230}
+    address: 230
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_231}
+    address: 231
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_232}
+    address: 232
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
+  - name: ${diag_233}
+    address: 233
+    value_type: U_WORD
+    register_type: holding
+    state_class: measurement
+    platform: modbus_controller
+    modbus_controller_id: ${modbus_id}
+    icon: mdi:information-box
+    entity_category: diagnostic
