@@ -1,0 +1,89 @@
+esphome:
+  name: itho hru 400
+  friendly_name: Itho HRU 400
+  comment: Itho Daalderop HRU 400 WTW
+  # Make sure the WTW unit is in auto mode after updating the ESP.
+  on_boot:
+    priority: 600
+    then:
+      - number.set:
+          # If you remove this, it will always restore to last set number and ignore the next.
+          id: fan_demand_value
+          value: 0
+      - number.set:
+          # I will be ignored if the above number is more than 0
+          id: fan_demand_on_off
+          value: 0
+      - number.set:
+          id: bypass_valve_on_off
+          value: 0
+      - number.set:
+          id: fan_flow_ingress_on_off
+          value: 0
+      - number.set:
+          id: bypass_valve_on_off
+          value: 0
+
+# Enable logging
+logger:
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+wifi:
+  # Local of things (no internet)
+  ssid: !secret lot_wifi_ssid
+  password: !secret lot_wifi_password
+  fast_connect: true
+  power_save_mode: light
+  use_address: !secret ip_address
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "WTW-RS485 Fallback Hotspot"
+    password: "HRU400Fallback"
+##
+# Enable captive portal
+captive_portal:
+##
+# Debugging webserver
+web_server:
+  port: 80
+  version: 3
+
+packages:
+  remote_package:
+    url: https://github.com/william-sy/esphome-Itho-Daalderop-HRU400
+    ref: main
+    refresh: 0s
+    files: [
+      # Step 1: Choose a language:
+      esphome/i18n/EN.yaml,
+      #esphome/i18n/NL.yaml,
+      # Step 2: Choose the board you bought:
+      # IMPORTANT SEE README -> https://github.com/william-sy/esphome-Itho-Daalderop-HRU400/blob/main/README.md
+      # New board settings:
+      #esphome/boards/uart/m5stack/U034/m5stack-C124-atom-s3-lite.yaml,
+      # Legacy board settings:
+      esphome/boards/board-esp32-atom-lite.yaml,
+      #esphome/boards/board-esp32-atom-s3-lite.yaml,
+      # Step 4: Configure the general stuff:
+      esphome/base/base.yaml,
+      esphome/base/fan.yaml,
+      esphome/base/select.yaml,
+      esphome/base/bypass.yaml,
+      esphome/base/frostvalve.yaml,
+      #esphome/base/advanced.yaml,
+      esphome/base/faultcodes.yaml,
+      # Add a comma here if you enable zones:
+      esphome/base/general.yaml
+      # Step 5: Enable aditional zones if you have them:
+      #esphome/zones/zone_1.yaml,
+      #esphome/zones/zone_2.yaml,
+      #esphome/zones/zone_3.yaml,
+      #esphome/zones/zone_4.yaml,
+      # Step 6: Dont forget to remove the last comma
+    ]
